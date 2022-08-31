@@ -1,24 +1,27 @@
-import logo from './logo.svg';
+
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import Nav from './components/Nav';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Home from './pages/Home';
+import History from './pages/History';
+import Pembayaran from './pages/Pembayaran';
+import PembayaranSukses from './pages/PembayaranSukses';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Nav/>
+      <main>
+        <Routes>
+          <Route path='/' element={<Home/>} />
+          <Route path='/history' element={<History/>}/>
+          <Route path='/pembayaran' element={<Pembayaran/>}/>
+          <Route path='/success' element={<PembayaranSukses/>}/>
+        </Routes>
+      </main>
+    </BrowserRouter>
   );
 }
 

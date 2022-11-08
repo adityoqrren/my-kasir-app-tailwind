@@ -1,0 +1,342 @@
+{
+  "payments": [
+    {
+      "id": 1,
+      "name": "cash"
+    },
+    {
+      "id": 2,
+      "name": "gopay"
+    },
+    {
+      "id": 3,
+      "name": "shopeepay"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Makanan"
+    },
+    {
+      "id": 2,
+      "name": "Minuman"
+    },
+    {
+      "id": 3,
+      "name": "Cemilan"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "code": "K-01",
+      "name": "Sate Ayam",
+      "price": 16000,
+      "is_ready": true,
+      "image": "sate-ayam.jpg",
+      "category": {
+        "id": 1,
+        "name": "Makanan"
+      }
+    },
+    {
+      "id": 2,
+      "code": "K-02",
+      "name": "Nasi Goreng Telur",
+      "price": 14000,
+      "is_ready": true,
+      "image": "nasi-goreng-telor.jpg",
+      "category": {
+        "id": 1,
+        "name": "Makanan"
+      }
+    },
+    {
+      "id": 3,
+      "code": "K-03",
+      "name": "Nasi Rames",
+      "price": 12000,
+      "is_ready": true,
+      "image": "nasi-rames.jpg",
+      "category": {
+        "id": 1,
+        "name": "Makanan"
+      }
+    },
+    {
+      "id": 4,
+      "code": "K-04",
+      "name": "Lontong Opor Ayam",
+      "price": 18000,
+      "is_ready": true,
+      "image": "lontong-opor-ayam.jpg",
+      "category": {
+        "id": 1,
+        "name": "Makanan"
+      }
+    },
+    {
+      "id": 5,
+      "code": "K-05",
+      "name": "Mie Goreng",
+      "price": 13000,
+      "is_ready": true,
+      "image": "mie-goreng.jpg",
+      "category": {
+        "id": 1,
+        "name": "Makanan"
+      }
+    },
+    {
+      "id": 6,
+      "code": "K-06",
+      "name": "Bakso",
+      "price": 10000,
+      "is_ready": true,
+      "image": "bakso.jpg",
+      "category": {
+        "id": 1,
+        "name": "Makanan"
+      }
+    },
+    {
+      "id": 7,
+      "code": "K-07",
+      "name": "Mie Ayam Bakso",
+      "price": 14000,
+      "is_ready": true,
+      "image": "mie-ayam-bakso.jpg",
+      "category": {
+        "id": 1,
+        "name": "Makanan"
+      }
+    },
+    {
+      "id": 8,
+      "code": "K-08",
+      "name": "Pangsit 6 pcs",
+      "price": 5000,
+      "is_ready": true,
+      "image": "pangsit.jpg",
+      "category": {
+        "id": 3,
+        "name": "Cemilan"
+      }
+    },
+    {
+      "id": 9,
+      "code": "K-09",
+      "name": "Kentang Goreng",
+      "price": 5000,
+      "is_ready": true,
+      "image": "kentang-goreng.jpg",
+      "category": {
+        "id": 3,
+        "name": "Cemilan"
+      }
+    },
+    {
+      "id": 10,
+      "code": "K-010",
+      "name": "Cheese Burger",
+      "price": 15000,
+      "is_ready": true,
+      "image": "cheese-burger.jpg",
+      "category": {
+        "id": 3,
+        "name": "Cemilan"
+      }
+    },
+    {
+      "id": 11,
+      "code": "K-011",
+      "name": "Coffe Late",
+      "price": 15000,
+      "is_ready": true,
+      "image": "coffe-late.jpg",
+      "category": {
+        "id": 2,
+        "name": "Minuman"
+      }
+    },
+    {
+      "id": 12,
+      "code": "K-012",
+      "name": "Es Jeruk",
+      "price": 7000,
+      "is_ready": true,
+      "image": "es-jeruk.jpg",
+      "category": {
+        "id": 2,
+        "name": "Minuman"
+      }
+    },
+    {
+      "id": 13,
+      "code": "K-013",
+      "name": "Es Teh",
+      "price": 5000,
+      "is_ready": true,
+      "image": "es-teh.jpg",
+      "category": {
+        "id": 2,
+        "name": "Minuman"
+      }
+    },
+    {
+      "id": 14,
+      "code": "K-014",
+      "name": "Teh Hangat",
+      "price": 3000,
+      "is_ready": true,
+      "image": "teh-hangat.jpg",
+      "category": {
+        "id": 2,
+        "name": "Minuman"
+      }
+    }
+  ],
+  "cart": [
+    {
+      "count": 1,
+      "notes": "",
+      "product": {
+        "category": {
+          "id": 1,
+          "name": "Makanan"
+        },
+        "code": "K-04",
+        "id": 4,
+        "image": "lontong-opor-ayam.jpg",
+        "is_ready": true,
+        "name": "Lontong Opor Ayam",
+        "price": 18000
+      },
+      "total_price": 18000,
+      "id": 3
+    },
+    {
+      "count": 1,
+      "notes": "",
+      "product": {
+        "category": {
+          "id": 1,
+          "name": "Makanan"
+        },
+        "code": "K-06",
+        "id": 6,
+        "image": "bakso.jpg",
+        "is_ready": true,
+        "name": "Bakso",
+        "price": 10000
+      },
+      "total_price": 10000,
+      "id": 4
+    },
+    {
+      "count": 1,
+      "notes": "",
+      "product": {
+        "category": {
+          "id": 2,
+          "name": "Minuman"
+        },
+        "code": "K-011",
+        "id": 11,
+        "image": "coffe-late.jpg",
+        "is_ready": true,
+        "name": "Coffe Late",
+        "price": 15000
+      },
+      "total_price": 15000,
+      "id": 5
+    }
+  ],
+  "order": [
+    {
+      "dateOrder": "2022-11-01T17:11:00.269Z",
+      "menus": [
+        {
+          "count": 1,
+          "id": 1,
+          "notes": "",
+          "product": {
+            "category": {
+              "id": 1,
+              "name": "Makanan"
+            },
+            "code": "K-02",
+            "id": 2,
+            "image": "nasi-goreng-telor.jpg",
+            "is_ready": true,
+            "name": "Nasi Goreng Telur",
+            "price": 14000
+          },
+          "total_price": 14000
+        },
+        {
+          "count": 1,
+          "id": 2,
+          "notes": "",
+          "product": {
+            "category": {
+              "id": 1,
+              "name": "Makanan"
+            },
+            "code": "K-05",
+            "id": 5,
+            "image": "mie-goreng.jpg",
+            "is_ready": true,
+            "name": "Mie Goreng",
+            "price": 13000
+          },
+          "total_price": 13000
+        },
+        {
+          "count": 1,
+          "id": 3,
+          "notes": "",
+          "product": {
+            "category": {
+              "id": 2,
+              "name": "Minuman"
+            },
+            "code": "K-013",
+            "id": 13,
+            "image": "es-teh.jpg",
+            "is_ready": true,
+            "name": "Es Teh",
+            "price": 5000
+          },
+          "total_price": 5000
+        },
+        {
+          "count": 1,
+          "id": 4,
+          "notes": "",
+          "product": {
+            "category": {
+              "id": 3,
+              "name": "Cemilan"
+            },
+            "code": "K-08",
+            "id": 8,
+            "image": "pangsit.jpg",
+            "is_ready": true,
+            "name": "Pangsit 6 pcs",
+            "price": 5000
+          },
+          "total_price": 5000
+        }
+      ],
+      "payment": {
+        "id": 3,
+        "name": "shopeepay",
+        "selected": true
+      },
+      "totalPaid": 37000,
+      "id": 11
+    }
+  ]
+}

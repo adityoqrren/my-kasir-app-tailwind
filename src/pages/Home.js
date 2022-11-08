@@ -3,14 +3,14 @@ import ListCategories from '../components/ListCategories';
 import { useState } from 'react';
 import Menus from '../components/Menus';
 import { API_URL } from '../utils/constants';
-import Keranjang from '../components/Keranjang';
+import Cart from '../components/Cart';
 import swal from 'sweetalert';
 
 function Home() {
 
     const [categoryChoosen, setCategoryChoosen] = useState(1);
     const [menusData, setMenusData] = useState([]); 
-    const [listKeranjang, setListKeranjang] = useState([]);
+    const [listCart, setListCart] = useState([]);
 
     useEffect(()=>{
         getMenusByCategory();
@@ -18,7 +18,7 @@ function Home() {
 
     //pakai [] berarti 1 kali saja, sama dengan componentDidMount
     useEffect(()=>{
-        getListKeranjang();
+        getListCart();
     },[])
 
     const onCategoryChange = (idChoosen) => {
@@ -32,40 +32,40 @@ function Home() {
         console.log(results);
     }
 
-    const getListKeranjang = async() => {
-        const data = await fetch(API_URL+"keranjangs");
+    const getListCart = async() => {
+        const data = await fetch(API_URL+"cart");
         //console.log(data);
         const results = await data.json();
-        setListKeranjang(results);
+        setListCart(results);
         console.log(results);
     }
 
-    const deleteDataKeranjang = async(item) => {
+    const deleteDataCart = async(item) => {
         try{
-            const response = await fetch(API_URL+"keranjangs/" + item.id, {method: 'DELETE'});
+            const response = await fetch(API_URL+"cart/" + item.id, {method: 'DELETE'});
             if(response.ok){
-                getListKeranjang();
-                showSweetAlert("Sukses Menghapus Item", `Sukses menghapus item ${item.product.nama} di keranjang`, "success");
+                getListCart();
+                showSweetAlert("Sukses Menghapus Item", `Sukses menghapus item ${item.product.name} di keranjang`, "success");
             }else{
-                showSweetAlert("Gagal Menghapus Item",`Gagal menghapus item ${item.product.nama} di keranjang`, "error");
+                showSweetAlert("Gagal Menghapus Item",`Gagal menghapus item ${item.product.name} di keranjang`, "error");
             }
         }catch(error){
             console.log("error delete");
         }
     }
 
-    const addToListKeranjang = async(item) => {
-        const data = await fetch(API_URL+"keranjangs?product.id="+item.id);
+    const addToListCart = async(item) => {
+        const data = await fetch(API_URL+"cart?product.id="+item.id);
         const results = await data.json();
         if(results.length === 0){
             //buat data baru di keranjang
             const itemToAdd = {
-                jumlah: 1,
-                total_harga: item.harga,
+                count: 1,
+                total_price: item.price,
                 product: item
             };
 
-            fetch(API_URL+"keranjangs",{
+            fetch(API_URL+"cart",{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,30 +73,31 @@ function Home() {
                 body: JSON.stringify(itemToAdd)
             })
             .then((response) => {
+                console.log(response)
                 if(response.ok){
-                    getListKeranjang();
-                    showSweetAlert("Sukses masuk keranjang!", `${item.nama} telah ditambahkan ke keranjang`,"success");
+                    getListCart();
+                    showSweetAlert("Sukses masuk keranjang!", `${item.name} telah ditambahkan ke keranjang`,"success");
                 }else{
                     // console.log("GAGAL!");
-                    showSweetAlert("Gagal masuk keranjang!", `${item.nama} gagal ditambahkan ke keranjang`,"error");
+                    showSweetAlert("Gagal masuk keranjang!", `${item.name} gagal ditambahkan ke keranjang`,"error");
                 }
             })
             .catch((error)=>{
                 console.log('Error:', error);
-                showSweetAlert("Gagal masuk keranjang!", `${item.nama} gagal ditambahkan ke keranjang`,"error");
+                showSweetAlert("Gagal masuk keranjang!", `${item.name} gagal ditambahkan ke keranjang`,"error");
             })
         }else{
             //update item
             const itemToUpdate = {
-                jumlah: results[0].jumlah + 1,
-                total_harga: results[0].total_harga + item.harga,
+                count: results[0].count + 1,
+                total_price: results[0].total_price + item.price,
                 product: item
             };
 
             //console.log(itemToUpdate);
 
             try{
-                const response = await fetch(API_URL+"keranjangs/"+results[0].id,{
+                const response = await fetch(API_URL+"cart/"+results[0].id,{
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -105,25 +106,25 @@ function Home() {
                 });
     
                 if(response.ok){
-                    getListKeranjang();
-                    showSweetAlert("Sukses update keranjang!", `${item.nama} telah ditambahkan ke keranjang`,"success");
+                    getListCart();
+                    showSweetAlert("Sukses update keranjang!", `${item.name} telah ditambahkan ke keranjang`,"success");
                 }else{
                     console.log("GAGAL!");
-                    showSweetAlert("Gagal update keranjang!", `${item.nama} gagal ditambahkan ke keranjang`,"error");
+                    showSweetAlert("Gagal update keranjang!", `${item.name} gagal ditambahkan ke keranjang`,"error");
                 }
 
             }catch(error){
                 console.log('Error:', error);
-                showSweetAlert("Gagal masuk keranjang!", `${item.nama} gagal ditambahkan ke keranjang`,"error");
+                showSweetAlert("Gagal masuk keranjang!", `${item.name} gagal ditambahkan ke keranjang`,"error");
             }
 
         }
     }
 
-    const editInListKeranjang = async(itemToUpdate, id) => {
+    const editInListCart = async(itemToUpdate, id) => {
         console.log(itemToUpdate);
         try{
-            const response = await fetch(API_URL+"keranjangs/"+id,{
+            const response = await fetch(API_URL+"cart/"+id,{
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -132,16 +133,16 @@ function Home() {
             });
 
             if(response.ok){
-                getListKeranjang();
-                // showSweetAlert("Sukses update keranjang!", `${item.nama} telah ditambahkan ke keranjang`,"success");
+                getListCart();
+                // showSweetAlert("Sukses update keranjang!", `${item.name} telah ditambahkan ke keranjang`,"success");
             }else{
                 console.log("GAGAL!");
-                // showSweetAlert("Gagal update keranjang!", `${item.nama} gagal ditambahkan ke keranjang`,"error");
+                // showSweetAlert("Gagal update keranjang!", `${item.name} gagal ditambahkan ke keranjang`,"error");
             }
 
         }catch(error){
             console.log('Error:', error);
-            // showSweetAlert("Gagal masuk keranjang!", `${item.nama} gagal ditambahkan ke keranjang`,"error");
+            // showSweetAlert("Gagal masuk keranjang!", `${item.name} gagal ditambahkan ke keranjang`,"error");
         }
     }
 
@@ -159,8 +160,8 @@ function Home() {
     return (
         <div className='flex flex-row flex-wrap'>
             <ListCategories categoryChoosen={categoryChoosen} onCategoryChange={onCategoryChange}/>
-            <Menus menusData={menusData} addToKeranjangHandler={addToListKeranjang}/>
-            <Keranjang keranjang={listKeranjang} deleteKeranjangHandler={deleteDataKeranjang} editKeranjangHandler={editInListKeranjang}/>
+            <Menus menusData={menusData} addToCartHandler={addToListCart}/>
+            <Cart listCart={listCart} deleteCartHandler={deleteDataCart} editCartHandler={editInListCart}/>
         </div>
     );
 }

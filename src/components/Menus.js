@@ -1,7 +1,7 @@
 import React from 'react';
 import MenuItem from './MenuItem';
 
-function Menus({menusData, addToKeranjangHandler}) {
+function Menus({menusData, addToCartHandler}) {
     return (
         <div className="basis-full md:basis-7/12 p-2">
             <h1 className="text-slate-900 text-3xl font-semibold my-2">Daftar Produk</h1>
@@ -10,7 +10,7 @@ function Menus({menusData, addToKeranjangHandler}) {
                 {
                     (
                         menusData && menusData.map((menu)=>(
-                            <MenuItem key={menu.id} menu={menu} addToKeranjangHandler={addToKeranjangHandler}/>
+                            <MenuItem key={menu.id} menu={menu} addToCartHandler={addToCartHandler}/>
                         ))
                     )
                 }

@@ -5,8 +5,8 @@ import Nav from './components/Nav';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Home from './pages/Home';
 import History from './pages/History';
-import Pembayaran from './pages/Pembayaran';
-import PembayaranSukses from './pages/PembayaranSukses';
+import PaymentSuccess from './pages/PaymentSuccess';
+import Payment from './pages/Payment';
 
 function App() {
 
@@ -17,8 +17,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>} />
           <Route path='/history' element={<History/>}/>
-          <Route path='/pembayaran' element={<Pembayaran/>}/>
-          <Route path='/success' element={<PembayaranSukses/>}/>
+          <Route path='/payment' element={<Payment/>}/>
+          <Route path='/success' element={<PaymentSuccess/>}/>
         </Routes>
       </main>
     </BrowserRouter>

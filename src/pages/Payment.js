@@ -1,30 +1,40 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import ListItemKeranjang from '../components/ListItemKeranjang';
+import ItemListCart from '../components/ItemListCart';
 import { API_URL } from '../utils/constants';
-import { numberWithCommas } from '../utils/utils';
+import { capitalizedFirstLetter, numberWithCommas } from '../utils/utils';
 import swal from 'sweetalert';
 import {useNavigate} from 'react-router-dom';
 
-function Pembayaran() {
 
-  const [listKeranjang, setListKeranjang] = useState([]);
-  const [totalBayar, setTotalBayar] = useState(0);
-  const [jenisPembayaran, setJenisPembayaran] = useState("");
+function Payment() {
+
+  const [listCart, setListCart] = useState([]);
+  const [allPayments, setAllPayments] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [paymentChoosen, setPaymentChoosen] = useState({});
   const navigate = useNavigate();
 
    //pakai [] berarti 1 kali saja, sama dengan componentDidMount
   useEffect(()=>{
-   getListKeranjang();
+   getListCart();
+   getAllPayments();
   },[])
 
-  const getListKeranjang = async() => {
-    const data = await fetch(API_URL+"keranjangs");
+  const getAllPayments = async() => {
+    const data = await fetch(API_URL+"payments");
+    const results = await data.json();
+    setAllPayments(results);
+  }
+
+
+  const getListCart = async() => {
+    const data = await fetch(API_URL+"cart");
     //console.log(data);
     const results = await data.json();
-    setListKeranjang(results);
+    setListCart(results);
     //console.log(results);
-    setTotalBayar(results.reduce((result, item) => (result+item.total_harga),0));
+    setTotalPrice(results.reduce((result, item) => (result+item.total_price),0));
   }
   
   // const onChangePembayaran = (event) => {
@@ -32,9 +42,9 @@ function Pembayaran() {
   //   setJenisPembayaran(value);
   // }
 
-  const onClickPembayaran = (pembayaran) => {
-    console.log(pembayaran);
-    setJenisPembayaran(pembayaran);
+  const onClickPayment = (payment) => {
+    console.log(payment);
+    setPaymentChoosen(payment);
   }
 
   const showSweetAlert = (title, message, icon) => {
@@ -47,24 +57,24 @@ function Pembayaran() {
     });
   }
 
-  const onSubmitPesanan = async(event) => {
+  const onSubmitOrder = async(event) => {
     console.log("on submit pesanan");
     event.preventDefault();
-    if(jenisPembayaran){
-      const pesanan = {
-        totalBayar: totalBayar,
-        menus: listKeranjang,
-        jenisPembayaran: jenisPembayaran,
+    if(paymentChoosen){
+      const order = {
+        totalPaid: totalPrice,
+        menus: listCart,
+        payment: paymentChoosen,
         dateOrder: new Date().toISOString()
       }
-      console.log(pesanan);
+      console.log(order);
       try{
-        const response = await fetch(API_URL+"pesanans",{
+        const response = await fetch(API_URL+"order",{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(pesanan)
+            body: JSON.stringify(order)
         });
 
         if(response.ok){
@@ -87,28 +97,34 @@ function Pembayaran() {
       <div className="w-full md:w-1/2 my-2">
         <h1 className="text-slate-900 text-3xl font-semibold my-2">Daftar Pesanan</h1>
         <ul className="my-2 max-h-64 md:max-h-96 border flex flex-col rounded-lg divide-y border-gray-20 overflow-x-hidden overflow-y-auto">
-          {listKeranjang && listKeranjang.map((item)=>(<ListItemKeranjang keranjangItem={item} />))}
+          {listCart && listCart.map((cartItem)=>(<ItemListCart cartItem={cartItem} />))}
         </ul>
         <div className="flex justify-end">
           <div>
             <p className="text-lg">Total</p>
-            <p className="text-xl font-bold">Rp {numberWithCommas(totalBayar)}</p>
+            <p className="text-xl font-bold">Rp {numberWithCommas(totalPrice)}</p>
           </div>
         </div>
       </div>
       <div className="w-full md:w-1/2 my-2">
         <h1 className="text-slate-900 text-3xl font-semibold my-2">Pilih Metode Pembayaran</h1>
-        <form id="myFormPembayaran" onSubmit={onSubmitPesanan}>
+        <form id="myFormPembayaran" onSubmit={onSubmitOrder}>
           <ul className="my-2 border flex flex-col rounded-lg divide-y border-gray-20 overflow-x-hidden overflow-y-auto">
-            <li key={1} className="p-2 cursor-pointer flex" onClick={()=>onClickPembayaran("tunai")}>
-              <div className="w-2/3">
-                TUNAI
-              </div>
-              <div className="w-1/3 text-end">
-                <input type="radio" name="jenis-pembayaran" id="tunai" value="tunai" checked={jenisPembayaran==="tunai"} />
-              </div>
-            </li>
-            <li key={2} className="p-2 cursor-pointer flex" onClick={()=>onClickPembayaran("gopay")}>
+            {
+              (allPayments && allPayments.map((item)=>
+                (
+                  <li key={1} className="p-2 cursor-pointer flex" onClick={()=>onClickPayment(item)}>
+                    <div className="w-2/3">
+                      {capitalizedFirstLetter(item.name)}
+                    </div>
+                    <div className="w-1/3 text-end">
+                      <input type="radio" name="payment" id={item.id} value={item} checked={paymentChoosen.id===item.id} />
+                    </div>
+                  </li>
+                )
+              ))
+            }
+            {/* <li key={2} className="p-2 cursor-pointer flex" onClick={()=>onClickPembayaran("gopay")}>
               <div className="w-2/3">
                 GOPAY
               </div>
@@ -123,7 +139,7 @@ function Pembayaran() {
               <div className="w-1/3 text-end">
                 <input type="radio" name="jenis-pembayaran" id="shopeepay" value="shopeepay" checked={jenisPembayaran==="shopeepay"} />
               </div>
-            </li>
+            </li> */}
           </ul>
           <button className="rounded-lg bg-cyan-700 border-2 border-cyan-500 w-full p-2 my-1 text-white text-center font-bold" type="submit">BAYAR Rp.60.000</button>
         </form>
@@ -132,4 +148,4 @@ function Pembayaran() {
   );
 }
 
-export default Pembayaran;
+export default Payment;

@@ -3,18 +3,18 @@ import {useEffect} from 'react';
 import { API_URL } from '../utils/constants';
 import {Link} from 'react-router-dom';
 
-function PembayaranSukses() {
+function PaymentSuccess() {
 
   useEffect(()=>{
-    deleteKeranjang();
+    deleteCart();
   });
 
-  const deleteKeranjang = async() => {
-    const result = await fetch(API_URL+"keranjangs");
+  const deleteCart = async() => {
+    const result = await fetch(API_URL+"cart");
     if(result.ok){
       const data = await result.json();
       data.forEach(item => {
-          fetch(API_URL+"keranjangs/" + item.id, {method: 'DELETE'})
+          fetch(API_URL+"cart/" + item.id, {method: 'DELETE'})
             .then((response)=>{
               if(!response.ok){
                 console.log("failed delete itemkeranjang id: "+item.id);
@@ -41,4 +41,4 @@ function PembayaranSukses() {
   );
 }
 
-export default PembayaranSukses;
+export default PaymentSuccess;

@@ -20,8 +20,8 @@ function ListCategories({categoryChoosen, onCategoryChange}){
         console.log(categoriesData);
     };
 
-    const Icon = ({nama}) => {
-        switch(nama){
+    const Icon = ({name}) => {
+        switch(name){
             case "Makanan" : return <FontAwesomeIcon icon={faUtensils}/>
             case "Minuman" : return <FontAwesomeIcon icon={faMugSaucer}/>
             case "Cemilan" : return <FontAwesomeIcon icon={faCheese}/>
@@ -37,7 +37,7 @@ function ListCategories({categoryChoosen, onCategoryChange}){
                 {
                     (
                         dataCategories && dataCategories.map((itemCategory)=>(
-                            <li href key={itemCategory.id} className={`${categoryChoosen===itemCategory.id ? "bg-cyan-700 text-white" : "text-gray-500"} p-2  cursor-pointer`} onClick={()=>onCategoryChange(itemCategory.id)}><span className="w-5 inline-block"><Icon nama={itemCategory.nama}/></span> {itemCategory.nama}</li>
+                            <li href key={itemCategory.id} className={`${categoryChoosen===itemCategory.id ? "bg-cyan-700 text-white" : "text-gray-500"} p-2  cursor-pointer`} onClick={()=>onCategoryChange(itemCategory.id)}><span className="w-5 inline-block"><Icon name={itemCategory.name}/></span> {itemCategory.name}</li>
                         ))
                     )
                 }

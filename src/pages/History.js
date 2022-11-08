@@ -1,12 +1,12 @@
 import React, { useState, useEffect} from 'react';
-import ListHistory from '../components/ListHistory';
+import ItemListHistory from '../components/ItemListHistory';
 import ModalHistory from '../components/ModalHistory';
 import { API_URL } from '../utils/constants';
 
 function History() {
     
-    const [listHistoryPesanan, setListHistoryPesanan] = useState([]);
-    const [openModalHistory, setOpenModalHistory] = useState(false);
+    const [historyOrderList, setHistoryOrderList] = useState([]);
+    const [historyOpenModal, setHistoryOpenModal] = useState(false);
     const [historyToModal, setHistoryToModal] = useState({});
 
     useEffect(() => {
@@ -14,22 +14,22 @@ function History() {
     }, [])
 
     const getListHistory = async() => {
-        const data = await fetch(API_URL+"pesanans");
+        const data = await fetch(API_URL+"order");
         //console.log(data);
         const results = await data.json();
-        setListHistoryPesanan(results);
+        setHistoryOrderList(results);
         console.log(results);
     }
 
     const showModal = (itemHistory) => {
         setHistoryToModal(itemHistory);
         if(itemHistory){
-            setOpenModalHistory(true);
+            setHistoryOpenModal(true);
         }
     }
 
     const closeModal = () => {
-        setOpenModalHistory(false);
+        setHistoryOpenModal(false);
     }
 
     return (
@@ -38,10 +38,10 @@ function History() {
                 <h1 className="text-slate-900 text-3xl font-semibold my-2">Daftar Histori Pemesanan</h1>
                 <hr className="mb-2" />
                 {
-                    (listHistoryPesanan && listHistoryPesanan.map((history)=><ListHistory itemHistory={history} showModalHistory={showModal}/>))
+                    (historyOrderList && historyOrderList.map((history)=><ItemListHistory itemHistory={history} showModalHistory={showModal}/>))
                 }
             </div>
-            {openModalHistory? <ModalHistory historyToModal={historyToModal} closeModalHandler={closeModal}/> : ""}
+            {historyOpenModal? <ModalHistory historyToModal={historyToModal} closeModalHandler={closeModal}/> : ""}
         </div>
     );
 }

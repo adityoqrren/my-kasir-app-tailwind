@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
-import ListItemKeranjang from './ListItemKeranjang';
 import { capitalizedFirstLetter, numberWithCommas, showFormattedDate } from '../utils/utils';
+import ItemListCart from './ItemListCart';
 
 function ModalHistory({historyToModal, closeModalHandler}) {
     
@@ -27,7 +27,7 @@ function ModalHistory({historyToModal, closeModalHandler}) {
                             {  
                                 (
                                     historyToModal.menus && historyToModal.menus.map((item)=>(
-                                        <ListItemKeranjang key={item.id} keranjangItem={item}/>
+                                        <ItemListCart key={item.id} cartItem={item}/>
                                     ))
                                 )
                             }
@@ -35,8 +35,8 @@ function ModalHistory({historyToModal, closeModalHandler}) {
                     </div>
                     <div class="mb-2 text-end">
                         <p>Total</p>
-                        <p class="text-lg font-semibold">Rp. {numberWithCommas(historyToModal.totalBayar)}</p>
-                        <p>Pembayaran {historyToModal.jenisPembayaran? capitalizedFirstLetter(historyToModal.jenisPembayaran) : "-"}</p>
+                        <p class="text-lg font-semibold">Rp. {numberWithCommas(historyToModal.totalPaid)}</p>
+                        <p>Pembayaran {historyToModal.payment? capitalizedFirstLetter(historyToModal.payment.name) : "-"}</p>
                     </div>
                 </div>
             </div>
